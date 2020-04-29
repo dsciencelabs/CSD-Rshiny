@@ -54,7 +54,7 @@ Search for insights asked for by your stakeholder, Shelly, and craft visual arti
 * Manipulating data to produce final metrics
 * Developing a data pipeline capable of real time analytics
 
-## Challenges
+## Your Challenges
 
 * Creating dynamic widgets that react to user input
 * Applying bootstrap principles to a shiny app (grid attributes, fluidRow)
