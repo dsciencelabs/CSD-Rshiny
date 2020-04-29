@@ -24,7 +24,7 @@ Search for insights asked for by your stakeholder, Shelly, and craft visual arti
 * Customer issue breakdown
 * Customer issue volume by location
 * Biggest pain points
-* Recommendation for CSAT targets
+* Recommendation for Customer Services Dashboard (CSD) targets
 * Craft and Save your visual artifacts 
 
 
