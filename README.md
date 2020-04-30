@@ -2,7 +2,7 @@
 
   Written by : Bakti Siregar, M.Si Department of Business statistics, Matana University (Tangerang)
   
-  https://www.youtube.com/watch?v=1_Z-VVYnQck
+  The application can be viewed in this link :  https://www.youtube.com/watch?v=1_Z-VVYnQck
 
 ## Overview
 
