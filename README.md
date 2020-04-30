@@ -14,7 +14,7 @@ The project was to create an interactive dashboard which displayed a dataset bas
 
 ## Project Background
 
-In your role as an analytics professional for a software company, you are working with the new Customer Support Director on a review of the advertising business. In the previous assignment you familiarized yourself with the analytics context and data set itself. Now, it is time to begin your search for insights and build some artifacts.
+In your role as an analytics professional (Data Scientist) for a software company, you are working with the new Customer Support Director on a review of the advertising business. In the previous assignment you familiarized yourself with the analytics context and data set itself. Now, it is time to begin your search for insights and build some artifacts.
 
 Your task is to:
 
