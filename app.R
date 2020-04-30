@@ -1,10 +1,10 @@
 # Shiny Dashboard (No SQL). 
-# Written by : Bakti Siregar, M.Si
+# Written by : Bakti Siregar, M.Sc
 # Department of Business statistics, Matana University (Tangerang)
 # Notes: Please don't share this code anywhere (just for my students)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## A. Prepare some requirement packages---- 
+# A. Prepare some requirement packages---- 
 library(shiny)
 library(shinydashboard)
 library(dplyr)
