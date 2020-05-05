@@ -1,6 +1,6 @@
 # Simple Project - Customer Services Dashboard No SQL
 
-  Written by : Bakti Siregar, M.Si Department of Business statistics, Matana University (Tangerang)
+  Written by : Bakti Siregar, S.Si, M.Sc Department of Business statistics, Matana University (Tangerang)
   
   The application can be viewed in this link :  https://www.youtube.com/watch?v=1_Z-VVYnQck
 
