@@ -7,7 +7,7 @@ $(document).ready(function(){
     // add intro js attributes to elements after dom load
     
     // header 
-    $(".logo").attr("data-intro", "Welcome to the Customer Satisfaction Dashboard. This dashboard is designed to provide useful insight into customer demand and key performance indicators.<br><br>As a software company focused on advertising, these analytics will help us to understand where improvements are required in our support function.").attr("data-step", "1");
+    $(".logo").attr("data-intro", "Welcome to MyDashboard. This dashboard is designed to provide useful insight into customer demand and key performance indicators.<br><br>As a software company focused on advertising, these analytics will help us to understand where improvements are required in our support function.").attr("data-step", "1");
   
     // main body
     $(".content").attr("data-intro", "The main performance indicators are displayed in this section. These include: <ul><li>Current customer satisfaction</li><li>Customer issue breakdown</li><li>Customer issue volume by location</li><li>Biggest pain points</li><li>Demand trends</li></ul>").attr("data-step", "2");

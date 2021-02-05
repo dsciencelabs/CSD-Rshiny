@@ -19,8 +19,17 @@ survey <- read_xlsx("SampleDataSet_CallCenter_Dash.xlsx", sheet = "Survey")
 # C. user interface ----
 ui <- dashboardPage(skin = "blue",
       # header
-      dashboardHeader(
-        title = "Bakti Siregar, M.Sc",
+      dashboardHeader(title = "MyDashboard",
+        dropdownMenu(type = "message",
+          messageItem(from = "Finance Update", message = "We are on threshold"),
+          messageItem(from = "Sales Update", message = "Sales are at 55%", icon = icon("bar-chart"),time = "22:00"),
+          messageItem(from = "Sales Update", message = "Meeting at 6 PM on Monday", icon = icon("handshake-o"), time = "03-25-2020")),
+        dropdownMenu(type = "notifications",
+          notificationItem(text = "Customer Map tab added to the dashboard", icon = icon("dashboard"), status = "success"),
+          notificationItem(text = "Server is currently running at 95% load", icon = icon("warning"),status = "warning")),
+        dropdownMenu(type = "tasks",taskItem(value = 57.9,color = "blue", "Chat"), 
+          taskItem(value = 38.1,color = "yellow","Inbound Call"),
+          taskItem(value = 4.03,color = "green","Email")),
         tags$li(class = "dropdown",
             style = "margin-top: 7px; margin-right: 5px;",
             actionButton(icon = icon("question"), "help", "", title = "Start a tour of the dashboard"))
@@ -29,13 +38,13 @@ ui <- dashboardPage(skin = "blue",
       # sidebar
       dashboardSidebar(
         sidebarMenu(
-          menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-          menuItem("Customer Map", tabName = "map", icon = icon("map")),
-          menuItem("Filter", icon = icon("filter"), startExpanded = FALSE,
+          menuItem("Summary", tabName = "dashboard", icon = icon("desktop")),
+          menuItem("Customer Map", tabName = "map", icon = icon("map-marked-alt")),
+          menuItem("Filter", icon = icon("sort"), startExpanded = FALSE,
             radioButtons("center", "Filter by Support Center", 
               list("Combined", "Support Center A", "Support Center B", "Support Center C", "Support Center D"))),
-          menuItem("Data Download", icon = icon("download",lib='glyphicon'), href = "https://github.com/Bakti-Siregar/CSD-Rshiny/raw/master/SampleDataSet_CallCenter_Dash.xlsx"),
-          menuItem("App Source Code", icon = icon("code"), href = "https://github.com/Bakti-Siregar/CSD-Rshiny")
+          menuItem("Data Download", icon = icon("cloud-download-alt"), href = "https://github.com/dsciencelabs/CSD-Rshiny/raw/master/SampleDataSet_CallCenter_Dash.xlsx"),
+          menuItem("App Source Code", icon = icon("github"), href = "https://github.com/dsciencelabs/CSD-Rshiny")
               )
       ),
   
@@ -145,7 +154,7 @@ ui <- dashboardPage(skin = "blue",
       avg_time_to_close
       ,paste('Time to Close', '(Hours)')
       ,icon = icon("time",lib='glyphicon')
-      ,color = "purple")  
+      ,color = "red")  
     })
   
   # average monthly requests 2015 (previous year)
@@ -161,7 +170,7 @@ ui <- dashboardPage(skin = "blue",
       avg_monthly_requests
       ,'Monthly Service Requests'
       ,icon = icon("signal",lib='glyphicon')
-      ,color = "purple")  
+      ,color = "yellow")  
     })
   
   # product quality
@@ -169,8 +178,8 @@ ui <- dashboardPage(skin = "blue",
     valueBox(
       product_score
       ,paste('Product Quality (1-9)')
-      ,icon = icon("laptop")
-      ,color = "yellow")   
+      ,icon = icon("level-up-alt")
+      ,color = "green")   
     })
   
   # overall satisfaction
@@ -179,9 +188,42 @@ ui <- dashboardPage(skin = "blue",
       satisfaction_score,
       paste("Overall Satisfaction (1-9)"),
       icon = icon("thumbs-up", lib = "glyphicon"),
-      color = "yellow"
+      color = "blue"
       )
     })
+    
+    
+  # top issues plot
+    output$bar <- renderPlotly({
+      if (input$center == "Combined") {
+        issues <- requests
+      } else {
+        issues <- requests %>% filter(requests$`Vendor - Site` == input$center)
+      }
+      
+      # count data using group by
+      issues <- issues %>% group_by(issues$`Issue Code 1`) %>% tally
+      
+      # select top 10
+      issues <- issues %>% top_n(10, n)
+      
+      # rename bar chart column
+      issues <- issues %>%
+        rename(
+          issues = "issues$\`Issue Code 1\`"
+        )
+      
+      # example of creating and sending JSON object to the browser
+      # issues_json <- toJSON(issues)
+      # session$sendCustomMessage("issues", issues_json)
+      plot_ly(
+        # factor() again to drop the levels that are null - 29 to 10
+        data = issues,
+        y = factor(issues$issues),
+        x = issues$n,
+        name = "Major Issues",
+        type = "bar",orientation = "h")})
+    
   
   # customer channel types plot
     output$pie <- renderPlotly({
@@ -192,9 +234,7 @@ ui <- dashboardPage(skin = "blue",
       }
     channel <- channel %>% group_by(channel$`Support Channel`) %>% tally
     channel <- channel %>%
-      rename(
-        channel = "channel$\`Support Channel\`"
-      )
+      rename(channel = "channel$\`Support Channel\`")
     channel <- channel[1:3, ]
     
     plot_ly(
@@ -231,36 +271,6 @@ ui <- dashboardPage(skin = "blue",
       )
     })
   
-  # top issues plot
-    output$bar <- renderPlotly({
-      if (input$center == "Combined") {
-      issues <- requests
-      } else {
-      issues <- requests %>% filter(requests$`Vendor - Site` == input$center)
-    }
-    
-  # count data using group by
-    issues <- issues %>% group_by(issues$`Issue Code 1`) %>% tally
-    
-  # select top 10
-    issues <- issues %>% top_n(10, n)
-    
-  # rename bar chart column
-    issues <- issues %>%
-      rename(
-        issues = "issues$\`Issue Code 1\`"
-      )
-    
-  # example of creating and sending JSON object to the browser
-  # issues_json <- toJSON(issues)
-  # session$sendCustomMessage("issues", issues_json)
-    plot_ly(
-    # factor() again to drop the levels that are null - 29 to 10
-      data = issues,
-         y = factor(issues$issues),
-         x = issues$n,
-      name = "Major Issues",
-      type = "bar",orientation = "h")})
   
   # world map plot
     output$map <- renderPlot({
